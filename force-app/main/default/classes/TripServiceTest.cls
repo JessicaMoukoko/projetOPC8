@@ -2,6 +2,7 @@
 public class TripServiceTest {
 
     @isTest
+      // méthode de test pour la création d'un trip 
     static void testCreateTrip() {
 
         Test.startTest();
@@ -13,6 +14,7 @@ public class TripServiceTest {
     }
 
     @isTest
+      // méthode de test pour la récupération d'un trip par son Id
     static void testGetTripById() {
 
         Trip__c trip = TripService.createTrip('Voyage Rome');
@@ -26,6 +28,7 @@ public class TripServiceTest {
     }
 
     @isTest
+       // méthode de test pour la mise à jour d'un trip
     static void testUpdateTrip() {
 
         Trip__c trip = TripService.createTrip('Ancien Nom');
@@ -47,6 +50,7 @@ public class TripServiceTest {
     }
 
     @isTest
+         // méthode de test pour la suppression d'un trip
     static void testDeleteTrip() {
 
         Trip__c trip = TripService.createTrip('Voyage à supprimer');

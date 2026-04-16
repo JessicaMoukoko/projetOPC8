@@ -5,8 +5,9 @@ global class BatchTripStatus implements Database.Batchable<SObject> {
     global Database.QueryLocator start(Database.BatchableContext bc) {
 
         return Database.getQueryLocator([
-            SELECT Id, Start_Date__c, Number_of_Participants__c, Status__c
+            SELECT Id, Start_Date__c, Number_of_Participants__c, Status__c, End_Date__c, Destination__c, Account__c, Opportunity__c, Name
             FROM Trip__c
+            WHERE Status__c != 'Annulé' AND Status__c != 'Terminé'
         ]);
     }
 

@@ -8,10 +8,10 @@ global class BatchTrip implements Database.Batchable<SObject> {
         Date targetDate = today.addDays(7);
 
         return Database.getQueryLocator([
-            SELECT Id, Start_Date__c, Number_of_Participants__c, Status__c
+            SELECT Id, Start_Date__c, Number_of_Participants__c, Status__c, End_Date__c, Destination__c, Account__c, Opportunity__c, Name
             FROM Trip__c
             WHERE Start_Date__c = :targetDate
-            AND Status__c != 'Annulé'
+            AND Status__c != 'Annulé' AND Status__c != 'Terminé'
         ]);
     }
 
@@ -23,7 +23,7 @@ global class BatchTrip implements Database.Batchable<SObject> {
 
         for(Trip__c trip : scope){
 
-            if(trip.Number_of_Participants__c != null && trip.Number_of_Participants__c < 10){
+            if(trip.Number_of_Participants__c == null || trip.Number_of_Participants__c < 10){
 
                 trip.Status__c = 'Annulé';
                 ListTripsToUpdate.add(trip);

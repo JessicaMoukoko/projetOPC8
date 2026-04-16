@@ -17,7 +17,13 @@ public class OpportunityServiceTest {
             'Test Opportunity',
             acc.Id,
             Date.today().addDays(30),
-            'Prospecting'
+            'Prospecting',
+            'Paris',
+             Date.today().addDays(30),
+             Date.today().addDays(37),
+             100,
+             20
+            
         );
         Test.stopTest();
 
@@ -30,12 +36,17 @@ public class OpportunityServiceTest {
     @isTest
     static void testGetOpportunityById() {
         Account acc = createTestAccount();
+        
         Opportunity opp = OpportunityService.createOpportunity(
             'Test Opportunity',
             acc.Id,
             Date.today().addDays(30),
-            'Prospecting'
-        );
+            'Prospecting',
+            'Paris',
+             Date.today().addDays(30),
+             Date.today().addDays(37),
+             100,
+             20);
 
         Test.startTest();
         Opportunity result = OpportunityService.getOpportunityById(opp.Id);
@@ -53,7 +64,12 @@ public class OpportunityServiceTest {
             'Test Opportunity',
             acc.Id,
             Date.today().addDays(30),
-            'Prospecting'
+            'Prospecting',
+            'Paris',
+             Date.today().addDays(30),
+             Date.today().addDays(37),
+             100,
+             20
         );
 
         Test.startTest();
@@ -79,7 +95,13 @@ public class OpportunityServiceTest {
             'Test Opportunity',
             acc.Id,
             Date.today().addDays(30),
-            'Prospecting'
+            'Prospecting',
+            'Paris',
+             Date.today().addDays(30),
+             Date.today().addDays(37),
+             100,
+             20
+
         );
 
         Test.startTest();
