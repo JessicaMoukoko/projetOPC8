@@ -2,19 +2,19 @@
 public class TripServiceTest {
 
     @isTest
-      // méthode de test pour la création d'un trip 
+    // Méthode de test pour la création d'un trip
     static void testCreateTrip() {
 
         Test.startTest();
         Trip__c trip = TripService.createTrip('Voyage Paris');
         Test.stopTest();
 
-        System.assertNotEquals(null, trip.Id, 'Le trip doit être créé');
-        System.assertEquals('Voyage Paris', trip.Name);
+        System.assertNotEquals(null, trip.Id, 'Le trip doit être créé avec un Id');
+        System.assertNotEquals(null, trip.Name, 'Le Name (autonumber) doit être généré automatiquement');
     }
 
     @isTest
-      // méthode de test pour la récupération d'un trip par son Id
+    // Méthode de test pour la récupération d'un trip par son Id
     static void testGetTripById() {
 
         Trip__c trip = TripService.createTrip('Voyage Rome');
@@ -23,34 +23,32 @@ public class TripServiceTest {
         Trip__c result = TripService.getTripById(trip.Id);
         Test.stopTest();
 
-        System.assertEquals(trip.Id, result.Id);
-        System.assertEquals('Voyage Rome', result.Name);
+        System.assertEquals(trip.Id, result.Id, 'L\'Id du trip récupéré doit correspondre');
+        System.assertNotEquals(null, result.Name, 'Le Name (autonumber) doit être présent');
+        System.assertEquals('Paris', result.Destination__c);
     }
 
     @isTest
-       // méthode de test pour la mise à jour d'un trip
+    // Méthode de test pour la mise à jour de la destination
     static void testUpdateTrip() {
 
-        Trip__c trip = TripService.createTrip('Ancien Nom');
+        Trip__c trip = TripService.createTrip('Voyage Test');
 
         Test.startTest();
-        Trip__c updated = TripService.updateTrip(
-            trip.Id,
-            'Nouveau Nom'
-        );
+        Trip__c updated = TripService.updateTrip(trip.Id, 'Tokyo');
         Test.stopTest();
 
-        System.assertEquals('Nouveau Nom', updated.Name);
+        System.assertEquals('Tokyo', updated.Destination__c, 'La destination doit être mise à jour à Tokyo');
 
         // Vérification en base
         Trip__c check = [
-            SELECT Name FROM Trip__c WHERE Id = :trip.Id
+            SELECT Destination__c FROM Trip__c WHERE Id = :trip.Id
         ];
-        System.assertEquals('Nouveau Nom', check.Name);
+        System.assertEquals('Tokyo', check.Destination__c, 'La mise à jour doit être persistée en base');
     }
 
     @isTest
-         // méthode de test pour la suppression d'un trip
+    // Méthode de test pour la suppression d'un trip
     static void testDeleteTrip() {
 
         Trip__c trip = TripService.createTrip('Voyage à supprimer');
@@ -59,7 +57,6 @@ public class TripServiceTest {
         TripService.deleteTrip(trip.Id);
         Test.stopTest();
 
-        // Vérifier suppression
         List<Trip__c> trips = [
             SELECT Id FROM Trip__c WHERE Id = :trip.Id
         ];

@@ -1,3 +1,4 @@
+@IsTest
 public class TestDataFactory {
 
     public static Opportunity createOpportunityWithTripData(Account acc) {

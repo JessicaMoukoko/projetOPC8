@@ -2,7 +2,9 @@
 public class BatchTripStatusTest {
 
     @isTest
+     // méthode de test pour l'exécution du batch et la vérification des statuts
     static void testBatchTripStatusExecution() {
+
         Account acc = AccountService.createAccount('Test Account');
         Opportunity opp = OpportunityService.createOpportunity(
             'Test Opportunity',
@@ -18,10 +20,9 @@ public class BatchTripStatusTest {
         Date today = Date.today();
 
         List<Trip__c> trips = new List<Trip__c>();
-
-        // Cas 1 : Voyage à venir (Start_Date > today)
+                                      
+                // Cas 1 : Voyage à venir où à la date du jour (today <= start) → doit rester à "A venir"                        
         trips.add(new Trip__c(
-            Name = 'Trip A venir',
             Start_Date__c = today.addDays(5),
             End_Date__c = today.addDays(10),
             Status__c = 'A venir',
@@ -31,9 +32,8 @@ public class BatchTripStatusTest {
             Number_of_Participants__c = 20
         ));
 
-        // Cas 2 : Voyage en cours (today entre start et end)
+            // Cas 2 : Voyage en cours où à la date du jour (start < today < end) → doit passer à "En Cours"
         trips.add(new Trip__c(
-            Name = 'Trip En cours',
             Start_Date__c = today.addDays(-2),
             End_Date__c = today.addDays(2),
             Status__c = 'A venir', 
@@ -45,7 +45,6 @@ public class BatchTripStatusTest {
 
         // Cas 3 : Voyage terminé (today > end)
         trips.add(new Trip__c(
-            Name = 'Trip Terminé',
             Start_Date__c = today.addDays(-10),
             End_Date__c = today.addDays(-5),
             Status__c = 'A venir',
@@ -57,7 +56,6 @@ public class BatchTripStatusTest {
 
         // Cas 4 : Déjà annulé → ignoré
         trips.add(new Trip__c(
-            Name = 'Trip Annulé',
             Start_Date__c = today.addDays(5),
             End_Date__c = today.addDays(10),
             Status__c = 'Annulé',
@@ -69,7 +67,6 @@ public class BatchTripStatusTest {
 
         // Cas 5 : Déjà terminé → ignoré
         trips.add(new Trip__c(
-            Name = 'Trip Déjà Terminé',
             Start_Date__c = today.addDays(-10),
             End_Date__c = today.addDays(-5),
             Status__c = 'Terminé',
@@ -87,23 +84,16 @@ public class BatchTripStatusTest {
         Test.stopTest();
 
         // Récupération des résultats
-        Map<String, Trip__c> results = new Map<String, Trip__c>();
-        for(Trip__c t : [
-            SELECT Name, Status__c 
-            FROM Trip__c 
-            WHERE Id IN :trips
-        ]) {
-            results.put(t.Name, t);
-        }
+        Map<Id, Trip__c> results = new Map<Id, Trip__c>(
+            [SELECT Status__c FROM Trip__c WHERE Id IN :trips]
+        );
 
-        // Assertions
-        System.assertEquals('A venir', results.get('Trip A venir').Status__c);
-        System.assertEquals('En Cours', results.get('Trip En cours').Status__c);
-        System.assertEquals('Terminé', results.get('Trip Terminé').Status__c);
-
-        // Vérifier qu'ils ne changent pas
-        System.assertEquals('Annulé', results.get('Trip Annulé').Status__c);
-        System.assertEquals('Terminé', results.get('Trip Déjà Terminé').Status__c);
+        // Assertions - Vérifier les statuts attendus pour chaque cas de test
+        System.assertEquals('A venir', results.get(trips[0].Id).Status__c, 'Cas 1: Voyage à venir');
+        System.assertEquals('En Cours', results.get(trips[1].Id).Status__c, 'Cas 2: Voyage en cours');
+        System.assertEquals('Terminé', results.get(trips[2].Id).Status__c, 'Cas 3: Voyage terminé');
+        System.assertEquals('Annulé', results.get(trips[3].Id).Status__c, 'Cas 4: Voyage annulé');
+        System.assertEquals('Terminé', results.get(trips[4].Id).Status__c, 'Cas 5: Voyage terminé');
     }
 
     @isTest

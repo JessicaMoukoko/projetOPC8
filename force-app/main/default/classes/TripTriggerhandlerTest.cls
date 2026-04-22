@@ -29,7 +29,6 @@ public class TripTriggerhandlerTest {
         Opportunity opp = createOpportunity(acc);
 
         Trip__c trip = new Trip__c(
-            Name = 'Trip Test',
             Account__c = acc.Id,
             Start_Date__c = Date.today(),
             End_Date__c = Date.today()
@@ -59,7 +58,6 @@ public class TripTriggerhandlerTest {
 
         
         Trip__c trip = new Trip__c(
-            Name = 'Trip Valide',
             Start_Date__c = Date.today(),
             End_Date__c = Date.today().addDays(5),
             Account__c = acc.Id,

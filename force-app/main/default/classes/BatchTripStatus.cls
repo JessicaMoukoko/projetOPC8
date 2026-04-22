@@ -1,7 +1,6 @@
 global class BatchTripStatus implements Database.Batchable<SObject> {
 
     // Méthode start pour récupérer tous les voyages
-
     global Database.QueryLocator start(Database.BatchableContext bc) {
 
         return Database.getQueryLocator([
@@ -10,7 +9,6 @@ global class BatchTripStatus implements Database.Batchable<SObject> {
             WHERE Status__c != 'Annulé' AND Status__c != 'Terminé'
         ]);
     }
-
     // Méthode execute pour vérifier le nombre de participants et mettre à jour le statut des voyages
 
     global void execute(Database.BatchableContext bc, List<Trip__c> scope) {
@@ -42,7 +40,6 @@ global class BatchTripStatus implements Database.Batchable<SObject> {
 }
 
 // Méthode finish pour envoyer une notification à l'administrateur avec le nombre de voyages mis à jour
-
     global void finish(Database.BatchableContext bc){
         
     }

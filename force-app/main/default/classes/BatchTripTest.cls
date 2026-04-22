@@ -24,7 +24,6 @@ public class BatchTripTest {
 
         // Cas 1 : doit être annulé (<10 participants)
         trips.add(new Trip__c(
-            Name = 'Trip 1',
             Status__c = 'A venir',
             Account__c = acc.Id,
             Opportunity__c = opp.Id,
@@ -36,7 +35,6 @@ public class BatchTripTest {
 
         // Cas 2 : ne doit PAS être annulé (>=10 participants)
         trips.add(new Trip__c(
-            Name = 'Trip 2',
             Status__c = 'A venir',
             Account__c = acc.Id,
             Opportunity__c = opp.Id,
@@ -49,7 +47,6 @@ public class BatchTripTest {
 
         // Cas 3 : hors périmètre (date différente)
         trips.add(new Trip__c(
-            Name = 'Trip 3',
             Start_Date__c = today.addDays(10),
             Number_of_Participants__c = 3,
             Status__c = 'A venir',
@@ -102,7 +99,6 @@ public class BatchTripTest {
         );
         // Aucun trip à annuler
         Trip__c trip = new Trip__c(
-            Name = 'Trip OK',
             Status__c = 'A venir',
             Account__c = acc.Id,
             Opportunity__c = opp.Id,
