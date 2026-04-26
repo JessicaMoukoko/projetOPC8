@@ -109,7 +109,7 @@ public class BatchTripTest {
         );
 
         insert trip;
-
+       // Exécution du batch
         Test.startTest();
         Database.executeBatch(new BatchTrip(), 200);
         Test.stopTest();

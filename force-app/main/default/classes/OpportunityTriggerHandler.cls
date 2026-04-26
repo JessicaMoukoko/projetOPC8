@@ -3,11 +3,12 @@ public class OpportunityTriggerHandler {
       // Méthode pour gérer le trigger après update d'une opportunité
 
     public static void handleAfterUpdate(List<Opportunity> ListOpps, Map<Id, Opportunity> oldMap) {
-
+ 
+         
         List<Trip__c> ListtripsToCreate = new List<Trip__c>();
 
-        for(Opportunity opp : ListOpps) {
-
+        for(Opportunity opp : ListOpps) {    
+     // récupére l'ancienne version de l'opportunité à partir de la map oldMap
             Opportunity oldOpp = oldMap.get(opp.Id);
 
      // Vérifier si le stage de l'opportunité est passé à 'Closed Won' et qu'il n'était pas 'Closed Won' auparavant

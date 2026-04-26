@@ -1,32 +1,21 @@
 @isTest
 public class TripTriggerhandlerTest {
 
-    //  création Account obligatoire pour Trip__c
-    private static Account createAccount() {
-        Account acc = new Account(Name = 'Test Account');
-        insert acc;
-        return acc;
-    }
-
-
-    private static Opportunity createOpportunity(Account acc) {
-        Opportunity opp = new Opportunity(
-            Name = 'Test Opportunity',
-            AccountId = acc.Id,
-            CloseDate = Date.today().addDays(30),
-            StageName = 'Prospecting'
-        );
-        insert opp;
-        return opp;
-    }
-
     @isTest
-
-    // méthode de test avec un cas invalide
     static void testValidateDates_Error() {
 
-        Account acc = createAccount();
-        Opportunity opp = createOpportunity(acc);
+       Account acc =  AccountService.createAccount('Test Account');
+        Opportunity opp = OpportunityService.createOpportunity(
+            'Test Opportunity',
+            acc.Id,
+            Date.today().addDays(30),
+            'Prospecting',
+            'Paris',
+            Date.today(),
+            Date.today(), // même date pour start et end
+            1000,
+            2
+        );
 
         Trip__c trip = new Trip__c(
             Account__c = acc.Id,
@@ -53,10 +42,19 @@ public class TripTriggerhandlerTest {
 
     static void testValidateDates_Valid() {
 
-        Account acc = createAccount();
-        Opportunity opp = createOpportunity(acc);
+        Account acc = AccountService.createAccount('Test Account');
+        Opportunity opp = OpportunityService.createOpportunity(
+            'Test Opportunity',
+            acc.Id,
+            Date.today().addDays(30),
+            'Prospecting',
+            'Paris',
+             Date.today(),
+             Date.today().addDays(5),
+             1000,
+             2
+        );
 
-        
         Trip__c trip = new Trip__c(
             Start_Date__c = Date.today(),
             End_Date__c = Date.today().addDays(5),

@@ -56,7 +56,7 @@ private class AccountServiceTest {
         insert acc;
 
         Test.startTest();
-        AccountService.deleteAccount(acc.Id);
+        Account accDeleted = AccountService.deleteAccount(acc.Id);
         Test.stopTest();
 
         // Vérification que le compte a été supprimé
