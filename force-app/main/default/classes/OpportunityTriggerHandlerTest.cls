@@ -1,35 +1,22 @@
 @isTest
 public class OpportunityTriggerHandlerTest {
 
-    // Méthode utilitaire pour créer un Account
-    private static Account createTestAccount() {
-        Account acc = new Account(Name = 'Test Account');
-        insert acc;
-        return acc;
-    }
-
-    // Méthode utilitaire pour créer une Opportunity
-    private static Opportunity createTestOpportunity(Id accountId) {
-        Opportunity opp = new Opportunity(
-            Name = 'Test Opportunity',
-            AccountId = accountId,
-            CloseDate = Date.today().addDays(10),
-            StageName = 'Prospecting',
-            Destination__c = 'Paris',
-            Start_Date__c = Date.today().addDays(20),
-            End_Date__c = Date.today().addDays(25),
-            Number_of_Participants__c = 2,
-            Amount = 1000
-        );
-        insert opp;
-        return opp;
-    }
 
     @isTest
     static void testHandleAfterUpdate_CreateTrip() {
 
-        Account acc = createTestAccount();
-        Opportunity opp = createTestOpportunity(acc.Id);
+        Account acc = AccountService.createAccount('Test Account');
+        Opportunity opp = OpportunityService.createOpportunity(
+            'Test Opportunity',
+            acc.Id,
+            Date.today().addDays(10),
+            'Prospecting',
+            'Paris',
+            Date.today().addDays(20),
+            Date.today().addDays(25),
+            1000,
+            2
+        );
 
         // Simuler oldMap (avant update)
         Opportunity oldOpp = opp.clone(false, true, false, false);
@@ -64,8 +51,18 @@ public class OpportunityTriggerHandlerTest {
     @isTest
     static void testHandleAfterUpdate_NoTripIfAlreadyClosedWon() {
 
-        Account acc = createTestAccount();
-        Opportunity opp = createTestOpportunity(acc.Id);
+        Account acc = AccountService.createAccount('Test Account');
+        Opportunity opp = OpportunityService.createOpportunity(
+            'Test Opportunity',
+            acc.Id,
+            Date.today().addDays(10),
+            'Closed Won',
+            'Paris',
+            Date.today().addDays(20),
+            Date.today().addDays(25),
+            1000,
+            2
+        );
 
         // Simuler déjà Closed Won avant update
         Opportunity oldOpp = opp.clone(false, true, false, false);
@@ -96,8 +93,18 @@ public class OpportunityTriggerHandlerTest {
     @isTest
     static void testHandleAfterUpdate_NoTripIfNotClosedWon() {
 
-        Account acc = createTestAccount();
-        Opportunity opp = createTestOpportunity(acc.Id);
+        Account acc = AccountService.createAccount('Test Account');
+        Opportunity opp = OpportunityService.createOpportunity(
+            'Test Opportunity',
+            acc.Id,
+            Date.today().addDays(10),
+            'Prospecting',
+            'Paris',
+            Date.today().addDays(20),
+            Date.today().addDays(25),
+            1000,
+            2
+        );
 
         // old stage
         Opportunity oldOpp = opp.clone(false, true, false, false);
