@@ -19,8 +19,7 @@ private class AccountServiceTest {
     @isTest
     static void GetAccountByIdTest() {
         // Appel de la méthode de récupération de compte
-        Account acc = new Account(Name = 'Test Account');   
-        insert acc;
+       Account acc = TestDataFactory.createAccount('Test Account');
 
         Test.startTest();
         Account accToTest = AccountService.getAccountById(acc.Id);
@@ -34,8 +33,7 @@ private class AccountServiceTest {
     @isTest
     static void UpdateAccountTest() {
         // Appel de la méthode de mise à jour de compte
-        Account acc = new Account(Name = 'Test Account');   
-        insert acc;
+        Account acc = TestDataFactory.createAccount('Test Account');
 
         Test.startTest();
         Account accToTest = AccountService.updateAccount(acc.Id, 'Test Account Updated');
@@ -52,11 +50,10 @@ private class AccountServiceTest {
     static void DeleteAccountTest() {
         // Appel de la méthode de suppression de compte
 
-        Account acc = new Account(Name = 'Test Account');   
-        insert acc;
+        Account acc = TestDataFactory.createAccount('Test Account');
 
         Test.startTest();
-        Account accDeleted = AccountService.deleteAccount(acc.Id);
+        AccountService.deleteAccount(acc.Id);
         Test.stopTest();
 
         // Vérification que le compte a été supprimé

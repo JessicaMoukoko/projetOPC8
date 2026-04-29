@@ -6,7 +6,7 @@ public class TripServiceTest {
     static void testCreateTrip() {
 
         Test.startTest();
-        Trip__c trip = TripService.createTrip('Voyage Paris');
+        Trip__c trip = TripService.createTrip('Voyage Paris'); 
         Test.stopTest();
 
         System.assertNotEquals(null, trip.Id, 'Le trip doit être créé avec un Id');
@@ -17,7 +17,14 @@ public class TripServiceTest {
     // Méthode de test pour la récupération d'un trip par son Id
     static void testGetTripById() {
 
-        Trip__c trip = TripService.createTrip('Voyage Rome');
+        Trip__c trip = TestDataFactory.createTrip(
+            'Test Trip',
+             'Paris',
+             Date.today(),
+             Date.today().addDays(5),
+             1000,
+             2
+        );
 
         Test.startTest();
         Trip__c result = TripService.getTripById(trip.Id);
@@ -32,7 +39,14 @@ public class TripServiceTest {
     // Méthode de test pour la mise à jour de la destination
     static void testUpdateTrip() {
 
-        Trip__c trip = TripService.createTrip('Voyage Test');
+        Trip__c trip = TestDataFactory.createTrip(
+            'Test Trip',
+             'Paris',
+             Date.today(),
+             Date.today().addDays(5),
+             1000,
+             2
+        );
 
         Test.startTest();
         Trip__c updated = TripService.updateTrip(trip.Id, 'Tokyo');
@@ -51,7 +65,14 @@ public class TripServiceTest {
     // Méthode de test pour la suppression d'un trip
     static void testDeleteTrip() {
 
-        Trip__c trip = TripService.createTrip('Voyage à supprimer');
+        Trip__c trip = TestDataFactory.createTrip(
+            'Test Trip',
+             'Paris',
+             Date.today(),
+             Date.today().addDays(5),
+             1000,
+             2
+        );
 
         Test.startTest();
         TripService.deleteTrip(trip.Id);

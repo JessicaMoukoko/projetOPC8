@@ -1,16 +1,9 @@
 @isTest
 public class ContractServiceTest {
 
-    // Méthode utilitaire pour créer un Account
-    private static Account createTestAccount() {
-        Account acc = new Account(Name = 'Test Account');
-        insert acc;
-        return acc;
-    }
-
     @isTest
     static void testCreateContract() {
-        Account acc = createTestAccount();
+        Account acc = TestDataFactory.createAccount('Test Account');
 
         Test.startTest();
         Contract con = ContractService.createContract(
@@ -27,8 +20,8 @@ public class ContractServiceTest {
 
     @isTest
     static void testGetContractById() {
-        Account acc = createTestAccount();
-        Contract con = ContractService.createContract(
+        Account acc = TestDataFactory.createAccount('Test Account');
+        Contract con = TestDataFactory.createContract(
             acc.Id,
             Date.today(),
             'Draft'
@@ -44,8 +37,8 @@ public class ContractServiceTest {
 
     @isTest
     static void testUpdateContract() {
-        Account acc = createTestAccount();
-        Contract con = ContractService.createContract(
+        Account acc = TestDataFactory.createAccount('Test Account');
+        Contract con = TestDataFactory.createContract(
             acc.Id,
             Date.today(),
             'Draft'
@@ -67,8 +60,8 @@ public class ContractServiceTest {
 
     @isTest
     static void testDeleteContract() {
-        Account acc = createTestAccount();
-        Contract con = ContractService.createContract(
+        Account acc = TestDataFactory.createAccount('Test Account');
+        Contract con = TestDataFactory.createContract(
             acc.Id,
             Date.today(),
             'Draft'

@@ -1,16 +1,9 @@
 @isTest
 public class OpportunityServiceTest {
 
-    // Méthode utilitaire pour créer un Account
-    private static Account createTestAccount() {
-        Account acc = new Account(Name = 'Test Account');
-        insert acc;
-        return acc;
-    }
-
     @isTest
     static void testCreateOpportunity() {
-        Account acc = createTestAccount();
+        Account acc = TestDataFactory.createAccount('Test Account');
 
         Test.startTest();
         Opportunity opp = OpportunityService.createOpportunity(
@@ -35,9 +28,9 @@ public class OpportunityServiceTest {
 
     @isTest
     static void testGetOpportunityById() {
-        Account acc = createTestAccount();
+        Account acc = TestDataFactory.createAccount('Test Account');
         
-        Opportunity opp = OpportunityService.createOpportunity(
+        Opportunity opp = TestDataFactory.createOpportunity(
             'Test Opportunity',
             acc.Id,
             Date.today().addDays(30),
@@ -59,8 +52,8 @@ public class OpportunityServiceTest {
 
     @isTest
     static void testUpdateOpportunity() {
-        Account acc = createTestAccount();
-        Opportunity opp = OpportunityService.createOpportunity(
+        Account acc = TestDataFactory.createAccount('Test Account');
+        Opportunity opp = TestDataFactory.createOpportunity(
             'Test Opportunity',
             acc.Id,
             Date.today().addDays(30),
@@ -90,8 +83,8 @@ public class OpportunityServiceTest {
 
     @isTest
     static void testDeleteOpportunity() {
-        Account acc = createTestAccount();
-        Opportunity opp = OpportunityService.createOpportunity(
+        Account acc = TestDataFactory.createAccount('Test Account');
+        Opportunity opp = TestDataFactory.createOpportunity(
             'Test Opportunity',
             acc.Id,
             Date.today().addDays(30),

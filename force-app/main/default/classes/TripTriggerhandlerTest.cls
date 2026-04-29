@@ -4,8 +4,8 @@ public class TripTriggerhandlerTest {
     @isTest
     static void testValidateDates_Error() {
 
-       Account acc =  AccountService.createAccount('Test Account');
-        Opportunity opp = OpportunityService.createOpportunity(
+       Account acc =  TestDataFactory.createAccount('Test Account');
+        Opportunity opp = TestDataFactory.createOpportunity(
             'Test Opportunity',
             acc.Id,
             Date.today().addDays(30),
@@ -18,9 +18,13 @@ public class TripTriggerhandlerTest {
         );
 
         Trip__c trip = new Trip__c(
+            Status__c = 'A venir',
             Account__c = acc.Id,
+            Opportunity__c = opp.Id,
+            Destination__c = 'Paris',
             Start_Date__c = Date.today(),
-            End_Date__c = Date.today()
+            End_Date__c = Date.today(),
+            Number_of_Participants__c = 2
         );
 
         Test.startTest();
@@ -42,8 +46,8 @@ public class TripTriggerhandlerTest {
 
     static void testValidateDates_Valid() {
 
-        Account acc = AccountService.createAccount('Test Account');
-        Opportunity opp = OpportunityService.createOpportunity(
+        Account acc = TestDataFactory.createAccount('Test Account');
+        Opportunity opp = TestDataFactory.createOpportunity(
             'Test Opportunity',
             acc.Id,
             Date.today().addDays(30),
@@ -56,12 +60,13 @@ public class TripTriggerhandlerTest {
         );
 
         Trip__c trip = new Trip__c(
-            Start_Date__c = Date.today(),
-            End_Date__c = Date.today().addDays(5),
+            Status__c = 'A venir',
             Account__c = acc.Id,
             Opportunity__c = opp.Id,
             Destination__c = 'Paris',
-            Number_of_Participants__c = 10
+            Start_Date__c = Date.today(),
+            End_Date__c = Date.today().addDays(5),
+            Number_of_Participants__c = 2
         );
 
         Test.startTest();

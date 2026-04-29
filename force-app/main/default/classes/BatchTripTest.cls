@@ -3,8 +3,8 @@ public class BatchTripTest {
 
     @isTest
     static void testBatchTripExecution() {
-        Account acc = AccountService.createAccount('Test Account');
-        Opportunity opp = OpportunityService.createOpportunity(
+        Account acc = TestDataFactory.createAccount('Test Account');
+        Opportunity opp = TestDataFactory.createOpportunity(
             'Test Opportunity',
             acc.Id,
             Date.today().addDays(30),
@@ -21,42 +21,39 @@ public class BatchTripTest {
 
         // Création des données de test
         List<Trip__c> trips = new List<Trip__c>();
-
+        
         // Cas 1 : doit être annulé (<10 participants)
-        trips.add(new Trip__c(
-            Status__c = 'A venir',
-            Account__c = acc.Id,
-            Opportunity__c = opp.Id,
-            Destination__c = 'Paris',
-            End_Date__c = targetDate.addDays(5),
-            Start_Date__c = targetDate,
-            Number_of_Participants__c = 5    
+        trips.add(TestdataFactory.createTrip(
+            'A venir',
+            acc.Id,
+            opp.Id,
+            'Paris',
+            targetDate,
+            targetDate.addDays(5),
+             5
         ));
 
         // Cas 2 : ne doit PAS être annulé (>=10 participants)
-        trips.add(new Trip__c(
-            Status__c = 'A venir',
-            Account__c = acc.Id,
-            Opportunity__c = opp.Id,
-            Destination__c = 'Paris',
-            End_Date__c = targetDate.addDays(5),
-            Start_Date__c = targetDate,
-            Number_of_Participants__c = 15    
-
+        trips.add(TestdataFactory.createTrip(
+            'A venir',
+            acc.Id,
+            opp.Id,
+            'Paris',
+            targetDate,
+            targetDate.addDays(5),
+            15
         ));
 
         // Cas 3 : hors périmètre (date différente)
-        trips.add(new Trip__c(
-            Start_Date__c = today.addDays(10),
-            Number_of_Participants__c = 3,
-            Status__c = 'A venir',
-            Account__c = acc.Id,
-            Opportunity__c = opp.Id,
-            Destination__c = 'Paris',
-            End_Date__c = today.addDays(10).addDays(5)
+        trips.add(TestdataFactory.createTrip(
+            'A venir',
+            acc.Id,
+            opp.Id,
+            'Paris',
+            today.addDays(10),
+            today.addDays(10).addDays(5),
+            3
         ));
-
-        insert trips;
 
         // Exécution du batch
         Test.startTest();
@@ -85,8 +82,8 @@ public class BatchTripTest {
     static void testBatchWithNoTripsToUpdate() {
 
         Date targetDate = Date.today().addDays(7);
-        Account acc = AccountService.createAccount('Test Account');
-        Opportunity opp = OpportunityService.createOpportunity(
+        Account acc = TestDataFactory.createAccount('Test Account');
+        Opportunity opp = TestDataFactory.createOpportunity(
             'Test Opportunity',
             acc.Id,
             Date.today().addDays(30),
@@ -98,17 +95,15 @@ public class BatchTripTest {
              20
         );
         // Aucun trip à annuler
-        Trip__c trip = new Trip__c(
-            Status__c = 'A venir',
-            Account__c = acc.Id,
-            Opportunity__c = opp.Id,
-            Destination__c = 'Paris',
-            End_Date__c = targetDate.addDays(5),
-            Start_Date__c = targetDate,
-            Number_of_Participants__c = 20
+        Trip__c trip = TestdataFactory.createTrip(
+            'A venir',
+            acc.Id,
+            opp.Id,
+            'Paris',
+            targetDate, 
+            targetDate.addDays(5),
+            20
         );
-
-        insert trip;
        // Exécution du batch
         Test.startTest();
         Database.executeBatch(new BatchTrip(), 200);

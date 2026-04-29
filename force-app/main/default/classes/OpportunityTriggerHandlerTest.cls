@@ -5,8 +5,8 @@ public class OpportunityTriggerHandlerTest {
     @isTest
     static void testHandleAfterUpdate_CreateTrip() {
 
-        Account acc = AccountService.createAccount('Test Account');
-        Opportunity opp = OpportunityService.createOpportunity(
+        Account acc = TestDataFactory.createAccount('Test Account');
+        Opportunity opp = TestDataFactory.createOpportunity(
             'Test Opportunity',
             acc.Id,
             Date.today().addDays(10),
@@ -51,8 +51,8 @@ public class OpportunityTriggerHandlerTest {
     @isTest
     static void testHandleAfterUpdate_NoTripIfAlreadyClosedWon() {
 
-        Account acc = AccountService.createAccount('Test Account');
-        Opportunity opp = OpportunityService.createOpportunity(
+        Account acc = TestDataFactory.createAccount('Test Account');
+        Opportunity opp = TestDataFactory.createOpportunity(
             'Test Opportunity',
             acc.Id,
             Date.today().addDays(10),
@@ -93,8 +93,8 @@ public class OpportunityTriggerHandlerTest {
     @isTest
     static void testHandleAfterUpdate_NoTripIfNotClosedWon() {
 
-        Account acc = AccountService.createAccount('Test Account');
-        Opportunity opp = OpportunityService.createOpportunity(
+        Account acc = TestDataFactory.createAccount('Test Account');
+        Opportunity opp = TestDataFactory.createOpportunity(
             'Test Opportunity',
             acc.Id,
             Date.today().addDays(10),
