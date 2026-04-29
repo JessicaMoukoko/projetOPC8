@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OpportuniteExistante</fullName>
+    <active>true</active>
+    <errorConditionFormula>Opportunity__c == null</errorConditionFormula>
+    <errorMessage>Le voyage doit toujours avoir une opportunité associée.</errorMessage>
+</ValidationRule>

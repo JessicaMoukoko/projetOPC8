@@ -6,7 +6,7 @@ global class BatchTripStatus implements Database.Batchable<SObject> {
         return Database.getQueryLocator([
             SELECT Id, Start_Date__c, Number_of_Participants__c, Status__c, End_Date__c, Destination__c, Account__c, Opportunity__c, Name
             FROM Trip__c
-            WHERE Status__c != 'Annulé' AND Status__c != 'Terminé'
+            WHERE Status__c != 'Annulé' AND Status__c != 'Terminé' AND Status__c != 'En cours' AND Status__c != 'A venir'
         ]);
     }
     // Méthode execute pour vérifier le nombre de participants et mettre à jour le statut des voyages
@@ -32,11 +32,11 @@ global class BatchTripStatus implements Database.Batchable<SObject> {
                 trip.Status__c = 'Terminé';
                 ListTripsToUpdate.add(trip);   
         }
-
+    }
         if(!ListTripsToUpdate.isEmpty()){
             update ListTripsToUpdate;
-        }
-    }
+        
+    
 }
 
 // Méthode finish pour envoyer une notification à l'administrateur avec le nombre de voyages mis à jour

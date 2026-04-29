@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CompteExistant</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(  ISBLANK(Account__c), NOT($Permission.IsAdmin))</errorConditionFormula>
+    <errorMessage>Un voyage doit toujours avoir un compte associé</errorMessage>
+</ValidationRule>
