@@ -21,10 +21,10 @@ public class BatchTripStatusTest {
 
         List<Trip__c> trips = new List<Trip__c>();
 
-        // Cas 1 : Voyage à venir où à la date du jour (today <= start) → doit rester à "A venir"    
+        // Cas 1 : Voyage en cours où à la date du jour (today <= start) → doit passer à "A venir"    
 
         Trip__c trip1 = TestdataFactory.createTrip(
-            'A venir',
+            'En Cours',
             acc.Id,
             opp.Id,
             'Paris',
